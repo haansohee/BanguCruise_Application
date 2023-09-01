@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct RadiationInformation: Decodable {
+struct RadiationInformationResponseDTO: Decodable {
     let sampleLoaction: String?  // 시료 수거지
     let analysisLocation: String?   // 분석지원명
     let product: String?  // 검사항목명

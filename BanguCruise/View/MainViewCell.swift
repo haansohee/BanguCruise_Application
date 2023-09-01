@@ -32,7 +32,7 @@ final class MainViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         addSubviews()
-        layout()
+        setupLayout()
     }
     
     required init?(coder: NSCoder) {
@@ -49,7 +49,7 @@ extension MainViewCell {
         ].forEach { contentView.addSubview($0) }
     }
     
-    private func layout() {
+    private func setupLayout() {
         productNameLabel.snp.makeConstraints {
             $0.top.leading.equalTo(self.safeAreaLayoutGuide).offset(8)
             $0.bottom.equalTo(self.safeAreaLayoutGuide).offset(-8)

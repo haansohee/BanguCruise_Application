@@ -71,7 +71,7 @@ final class MainView: UIView {
         super.init(frame: frame)
         backgroundColor = .systemBackground
         addSubviews()
-        layout()
+        setupLayout()
     }
     
     required init?(coder: NSCoder) {
@@ -90,7 +90,7 @@ extension MainView {
         ].forEach { addSubview($0) }
     }
     
-    private func layout() {
+    private func setupLayout() {
         inputDateLabel.snp.makeConstraints {
             $0.top.leading.equalTo(self.safeAreaLayoutGuide).offset(14)
             $0.trailing.equalTo(self.safeAreaLayoutGuide).offset(-14)

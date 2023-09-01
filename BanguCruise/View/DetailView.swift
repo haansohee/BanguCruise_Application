@@ -92,7 +92,7 @@ final class DetailView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubviews()
-        layout()
+        setupLayout()
     }
     
     required init?(coder: NSCoder) {
@@ -114,7 +114,7 @@ extension DetailView {
         ].forEach { addSubview($0) }
     }
     
-    private func layout() {
+    private func setupLayout() {
         sampleLocationLabel.snp.makeConstraints {
             $0.top.equalTo(self.safeAreaLayoutGuide).offset(80)
             $0.leading.equalTo(self.safeAreaLayoutGuide).offset(14)
