@@ -38,6 +38,11 @@ final class MainViewCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    func configureLabelText(product: String, result: String) {
+        productNameLabel.text = product
+        resultLabel.text = result
+    }
 }
 
 extension MainViewCell {

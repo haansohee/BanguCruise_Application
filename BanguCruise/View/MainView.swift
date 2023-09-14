@@ -8,50 +8,43 @@
 import UIKit
 import SnapKit
 
+
 final class MainView: UIView {
     
-    private let inputDateLabel: UILabel = {
+    let inputDateLabel: UILabel = {
         let label = UILabel()
-        label.text =
-"""
-원하는 검사 날짜를 입력하세요.
-(예시: 20230801)
-"""
+        label.text = "최근 2주 간의 검사 결과입니다."
         label.font = .systemFont(ofSize: 20, weight: .bold)
         label.textColor = .label
-        label.numberOfLines = 2
+        label.textColor = .label
         label.textAlignment = .center
         
         return label
     }()
     
-    private let startDateTextField: UITextField = {
-        let textField = UITextField()
-        textField.placeholder = "검사 시작 날짜"
-        textField.textColor = .label
-        textField.textAlignment = .center
-        textField.font = .systemFont(ofSize: 18)
-        textField.layer.borderColor = UIColor.black.cgColor
-        textField.layer.borderWidth = 0.5
-        textField.layer.cornerRadius = 10
+    let startDateLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .label
+        label.textAlignment = .center
+        label.font = .systemFont(ofSize: 18)
+        label.layer.borderColor = UIColor.black.cgColor
+        label.numberOfLines = 2
         
-        return textField
+        return label
     }()
     
-    private let endDateTextField: UITextField = {
-        let textField = UITextField()
-        textField.placeholder = "검사 종료 날짜"
-        textField.textColor = .label
-        textField.textAlignment = .center
-        textField.font = .systemFont(ofSize: 18)
-        textField.layer.borderColor = UIColor.black.cgColor
-        textField.layer.borderWidth = 0.5
-        textField.layer.cornerRadius = 10
+    let endDateLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .label
+        label.textAlignment = .center
+        label.font = .systemFont(ofSize: 18)
+        label.layer.borderColor = UIColor.black.cgColor
+        label.numberOfLines = 2
         
-        return textField
+        return label
     }()
     
-    private let searchButton: UIButton = {
+    let searchButton: UIButton = {
         let button = UIButton()
         button.setTitle("검색하기", for: .normal)
         button.setTitleColor(.systemBlue, for: .normal)
@@ -83,8 +76,8 @@ extension MainView {
     private func addSubviews() {
         [
             inputDateLabel,
-            startDateTextField,
-            endDateTextField,
+            startDateLabel,
+            endDateLabel,
             searchButton,
             tableView
         ].forEach { addSubview($0) }
@@ -96,14 +89,14 @@ extension MainView {
             $0.trailing.equalTo(self.safeAreaLayoutGuide).offset(-14)
         }
 
-        startDateTextField.snp.makeConstraints {
+        startDateLabel.snp.makeConstraints {
             $0.top.equalTo(inputDateLabel.snp.bottom).offset(14)
             $0.leading.equalTo(self.safeAreaLayoutGuide).offset(14)
-            $0.trailing.equalTo(endDateTextField.snp.leading).offset(-10)
+            $0.trailing.equalTo(endDateLabel.snp.leading).offset(-10)
             $0.height.equalTo(50)
         }
 
-        endDateTextField.snp.makeConstraints {
+        endDateLabel.snp.makeConstraints {
             $0.top.equalTo(inputDateLabel.snp.bottom).offset(14)
             $0.trailing.equalTo(self.safeAreaLayoutGuide).offset(-14)
             $0.width.equalTo(180)
@@ -111,7 +104,7 @@ extension MainView {
         }
 
         searchButton.snp.makeConstraints {
-            $0.top.equalTo(endDateTextField.snp.bottom).offset(14)
+            $0.top.equalTo(endDateLabel.snp.bottom).offset(14)
             $0.centerX.equalTo(self.safeAreaLayoutGuide)
             $0.width.equalTo(80)
             $0.height.equalTo(40)

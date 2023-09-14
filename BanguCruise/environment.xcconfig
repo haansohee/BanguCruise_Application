@@ -1,0 +1,13 @@
+//
+//  environment.xcconfig
+//  BanguCruise
+//
+//  Created by 한소희 on 2023/09/04.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+// https:// -> https:/$()/
+
+API_URL = http:/$()/www.nfqs.go.kr/hpmg/front/api/smp_ra_api.do?cert_key=415D4275C0EC4D02F4DB74A14E7EC616D888C593EA47EE0A895443E27345D913
