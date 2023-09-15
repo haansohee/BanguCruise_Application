@@ -17,6 +17,7 @@ Pods/
 **/.firebaserc
 
 *.xcconfig
+
 environment.xcconfig
 
 ### Firebase Patch ###
