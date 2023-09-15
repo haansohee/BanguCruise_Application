@@ -102,15 +102,6 @@ final class DetailView: UIView {
         analysisEndDateLabel.text = "분석종료일자: \(item.analysisEndDate)"
         inspectionItemLabel.text = "검사항목: \(item.inspectionItem)"
         resultLabel.text = "검사결과: \(item.result)"
-        
-        
-//        var analMchnNm: String   // 분석지원명
-//        var itmNm: String  // 검사항목명
-//        var analRqstDt: String  // 분석 의뢰 일자
-//        var analStDt: String  // 분석 시작 일자
-//        var analEndDt: String  // 분석 종료 일자
-//        var survCiseNm: String  // 검사 항목
-//        var charPsngVal: String  // 검사 결과
     }
      
     required init?(coder: NSCoder) {
