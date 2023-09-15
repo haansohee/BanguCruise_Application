@@ -17,7 +17,6 @@ class MainViewModel {
     private let formatter = DateFormatter()
     
     func parsing(startDate: String, endDate: String) {
-        
         guard let baseURL = Bundle.main.infoDictionary?["API_URL"] as? String else { return }
         let urlString = baseURL + "&start_dt=\(startDate)&end_dt=\(endDate)"
         guard let url = URL(string: urlString) else { return }
