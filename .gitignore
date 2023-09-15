@@ -18,7 +18,7 @@ Pods/
 
 *.xcconfig
 
-environment.xcconfig
+/Users/hansohee/Xcode/BanguCruise/environment.xcconfig
 
 ### Firebase Patch ###
 
