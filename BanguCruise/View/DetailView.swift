@@ -89,15 +89,34 @@ final class DetailView: UIView {
         return label
     }()
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(item: BanguCruiseResponseDTO) {
+        super.init(frame: .zero)
         addSubviews()
         setupLayout()
+        
+        sampleLocationLabel.text = "시료수거지: \(item.sampleLocation)"
+        analysisLocationLabel.text = "분석지원명: \(item.analysisLocation)"
+        productLabel.text = "검사항목명: \(item.product)"
+        analysisStartDateLabel.text = "분석의뢰일자: \(item.analysisRequestDate)"
+        analysisStartDateLabel.text = "분석시작일자: \(item.analysisStartDate)"
+        analysisEndDateLabel.text = "분석종료일자: \(item.analysisEndDate)"
+        inspectionItemLabel.text = "검사항목: \(item.inspectionItem)"
+        resultLabel.text = "검사결과: \(item.result)"
+        
+        
+//        var analMchnNm: String   // 분석지원명
+//        var itmNm: String  // 검사항목명
+//        var analRqstDt: String  // 분석 의뢰 일자
+//        var analStDt: String  // 분석 시작 일자
+//        var analEndDt: String  // 분석 종료 일자
+//        var survCiseNm: String  // 검사 항목
+//        var charPsngVal: String  // 검사 결과
     }
-    
+     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+        
 }
 
 extension DetailView {

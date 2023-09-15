@@ -10,7 +10,16 @@ import UIKit
 import SnapKit
 
 final class DetailViewController: UIViewController {
-    private let detailView = DetailView()
+    private let detailView: DetailView
+    
+    init(item: BanguCruiseResponseDTO) {
+        self.detailView = DetailView(item: item)
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

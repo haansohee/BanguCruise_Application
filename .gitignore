@@ -16,6 +16,10 @@ Pods/
 **/node_modules/*
 **/.firebaserc
 
+*.xcconfig
+
+environment.xcconfig
+
 ### Firebase Patch ###
 
 .runtimeconfig.json
@@ -78,6 +82,7 @@ xcuserdata/
 
 build/
 DerivedData/
+DerivedData2/
 *.moved-aside
 *.pbxuser
 !default.pbxuser
