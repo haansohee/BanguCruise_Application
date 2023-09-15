@@ -13,7 +13,7 @@ final class MainView: UIView {
     
     let inputDateLabel: UILabel = {
         let label = UILabel()
-        label.text = "최근 2주 간의 검사 결과입니다."
+        label.text = "최근 2주 간의 검사 결과입니다. 😀"
         label.font = .systemFont(ofSize: 20, weight: .bold)
         label.textColor = .label
         label.textColor = .label
