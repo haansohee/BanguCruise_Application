@@ -18,6 +18,8 @@ final class MainView: UIView {
         label.textColor = .label
         label.textColor = .label
         label.textAlignment = .center
+        label.layer.borderColor = UIColor.black.cgColor
+        label.layer.borderWidth = 0.5
         
         return label
     }()
@@ -29,6 +31,8 @@ final class MainView: UIView {
         label.font = .systemFont(ofSize: 18)
         label.layer.borderColor = UIColor.black.cgColor
         label.numberOfLines = 2
+        label.layer.borderColor = UIColor.black.cgColor
+        label.layer.borderWidth = 0.5
         
         return label
     }()
@@ -40,6 +44,8 @@ final class MainView: UIView {
         label.font = .systemFont(ofSize: 18)
         label.layer.borderColor = UIColor.black.cgColor
         label.numberOfLines = 2
+        label.layer.borderColor = UIColor.black.cgColor
+        label.layer.borderWidth = 0.5
         
         return label
     }()
@@ -48,9 +54,18 @@ final class MainView: UIView {
         let button = UIButton()
         button.setTitle("검색하기", for: .normal)
         button.setTitleColor(.systemBlue, for: .normal)
+        button.layer.borderColor = UIColor.black.cgColor
+        button.layer.borderWidth = 0.5
         
         return button
     }()
+    
+    let pickerView: UIPickerView = {
+        let pickerView = UIPickerView()
+        
+        return pickerView
+    }()
+
     
     let tableView: UITableView = {
         let tableView = UITableView()
@@ -79,7 +94,8 @@ extension MainView {
             startDateLabel,
             endDateLabel,
             searchButton,
-            tableView
+            pickerView
+//            tableView
         ].forEach { addSubview($0) }
     }
     
@@ -87,6 +103,7 @@ extension MainView {
         inputDateLabel.snp.makeConstraints {
             $0.top.leading.equalTo(self.safeAreaLayoutGuide).offset(14)
             $0.trailing.equalTo(self.safeAreaLayoutGuide).offset(-14)
+            $0.height.equalTo(30)
         }
 
         startDateLabel.snp.makeConstraints {
@@ -110,10 +127,17 @@ extension MainView {
             $0.height.equalTo(40)
         }
         
-        tableView.snp.makeConstraints {
-            $0.top.equalTo(searchButton.snp.bottom).offset(8)
-            $0.leading.equalTo(self.safeAreaLayoutGuide)
-            $0.bottom.trailing.equalTo(self.safeAreaLayoutGuide)
+        pickerView.snp.makeConstraints {
+            $0.top.equalTo(searchButton.snp.bottom).offset(14)
+            $0.leading.equalTo(self.safeAreaLayoutGuide).offset(8)
+            $0.trailing.bottom.equalTo(self.safeAreaLayoutGuide).offset(-8)
         }
+        
+        
+//        tableView.snp.makeConstraints {
+//            $0.top.equalTo(searchButton.snp.bottom).offset(8)
+//            $0.leading.equalTo(self.safeAreaLayoutGuide)
+//            $0.bottom.trailing.equalTo(self.safeAreaLayoutGuide)
+//        }
     }
 }

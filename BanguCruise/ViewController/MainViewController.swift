@@ -30,12 +30,8 @@ extension MainViewController {
     private func setupMainView() {
         title = "방구크루즈"
         view.backgroundColor = .systemBackground
-        
-        mainView.tableView.delegate = self
-        mainView.tableView.dataSource = self
-        
-        mainView.tableView.register(MainViewCell.self, forCellReuseIdentifier: "MainViewCell")
-        mainView.tableView.separatorStyle = .singleLine
+        mainView.pickerView.delegate = self
+        mainView.pickerView.dataSource = self
     }
     
     private func addSubviews() {
@@ -62,50 +58,76 @@ extension MainViewController {
     private func bindSearchButton() {
         mainView.searchButton.rx.tap
             .subscribe(onNext: { [weak self] _ in
-                
                 guard let startDate = self?.viewModel.setTwoWeeksAgo()[1],
                       let endDate = self?.viewModel.setTwoWeeksAgo()[0] else { return }
                 self?.viewModel.parsing(startDate: startDate, endDate: endDate)
             })
-            .disposed(by: disposeBag)
+            .disposed(by: disposeBag)        
     }
     
     private func bindIsParsed() {
         viewModel.isParsed
             .subscribe(onNext: { [weak self] _ in
+                if let item = self?.viewModel.banguCruiseItems {
+                    self?.viewModel.getItem(item: item)
+                }
                 DispatchQueue.main.async {
-                    self?.mainView.tableView.reloadData()
+                    self?.mainView.pickerView.reloadAllComponents()
+                    
                 }
         })
             .disposed(by: disposeBag)
     }
 }
 
-extension MainViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let item = viewModel.banguCruiseItems?[indexPath.row] else { return }
-        self.present(DetailViewController(item: item), animated: true)
+extension MainViewController: UIPickerViewDelegate {
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        switch component {
+        case 0:
+            viewModel.selectedLocation = viewModel.locationItem[row]
+            mainView.pickerView.reloadAllComponents()
+        case 1:
+            viewModel.selectedProduct = viewModel.productItem[row]
+        default:
+            print("Error")
+        }
+        print(viewModel.selectedProduct, viewModel.selectedLocation)
+        viewModel.dataCheck(product: viewModel.selectedProduct, location: viewModel.selectedLocation)
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
+        return 30
     }
 }
 
-extension MainViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.banguCruiseItems?.count ?? 0
+extension MainViewController: UIPickerViewDataSource {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 2
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = mainView.tableView.dequeueReusableCell(withIdentifier: "MainViewCell", for: indexPath) as? MainViewCell else {
-            return UITableViewCell()
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        switch component {
+        case 0:
+            return viewModel.locationItem.count
+            
+        case 1:
+            return viewModel.productItem.count
+            
+        default:
+            return 0
         }
-        
-        guard let items = viewModel.banguCruiseItems else { return cell }
-        
-        let product = items[indexPath.row].product
-        let result = items[indexPath.row].result
-        cell.configureLabelText(product: product, result: result)
-        
-        return cell
     }
     
-    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        switch component {
+        case 0:
+            return viewModel.locationItem[row]
+            
+        case 1:
+            return viewModel.productItem[row]
+            
+        default:
+            return nil
+        }
+    }
 }
