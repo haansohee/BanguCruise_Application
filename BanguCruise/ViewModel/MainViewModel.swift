@@ -16,8 +16,8 @@ class MainViewModel {
     private let formatter = DateFormatter()
     private(set) var productItem: [String] = []
     private(set) var locationItem: [String] = []
-    var selectedProduct: String = ""
-    var selectedLocation: String = ""
+    private(set) var selectedLocation: String = ""
+    private(set) var selectedProduct: String = ""
     
     func parsing(startDate: String, endDate: String) {
         guard let baseURL = Bundle.main.infoDictionary?["API_URL"] as? String else { return }
@@ -43,7 +43,7 @@ class MainViewModel {
         return [today, twoWeeksAgo]
     }
     
-    func getItem(item: [BanguCruiseResponseDTO]) {
+    func removeDuplicateItem(item: [BanguCruiseResponseDTO]) {
         var product: Set<String> = []
         var location: Set<String> = []
         item.forEach {
@@ -56,31 +56,37 @@ class MainViewModel {
     }
     
     func dataCheck(product: String, location: String) {
-        guard let productIndexList = banguCruiseItems?.indices.filter({
-            banguCruiseItems?[$0].product == product
+        guard let productIndexList = banguCruiseItems?.indices.filter({ item in
+            banguCruiseItems?[item].product == product
         }) else { return }
         
-        guard let locationIndexList = banguCruiseItems?.indices.filter({
-            banguCruiseItems?[$0].sampleLocation == location
+        guard let locationIndexList = banguCruiseItems?.indices.filter({ item in
+            banguCruiseItems?[item].sampleLocation == location
         }) else { return }
         
-
-        if (productIndexList.isEmpty == false) && (locationIndexList.isEmpty == false) {
-            for i in 0...(locationIndexList.count - 1) {
-                for j in 0...(productIndexList.count - 1) {
-                    if locationIndexList[i] == productIndexList[j] {
-                        print("존재함")
-                        return
-                    }
-                }
-                if i == (locationIndexList.count-1) {
-                    print("존재하지 않음")
+        let isEmptyLocation = locationIndexList.isEmpty
+        let isEmptyProduct = productIndexList.isEmpty
+        
+        if (!isEmptyLocation) && (!isEmptyProduct) {
+            locationIndexList.forEach { locationIndex in
+                if productIndexList.contains(locationIndex) {
+                    print("존재함")
+                } else {
+                    print("존재 안 함")
                 }
             }
-        } else if (locationIndexList.isEmpty == true) || (productIndexList.isEmpty == true) {
+        } else if (isEmptyLocation) || (isEmptyProduct) {
             print("장소 혹은 제품을 선택바람")
         }
         
+    }
+    
+    func setSelectedLocation(location: String) {
+        self.selectedLocation = location
+    }
+    
+    func setSelectedProduct(product: String) {
+        self.selectedProduct = product
     }
     
 }

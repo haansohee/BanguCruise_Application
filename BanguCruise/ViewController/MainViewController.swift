@@ -68,9 +68,8 @@ extension MainViewController {
     private func bindIsParsed() {
         viewModel.isParsed
             .subscribe(onNext: { [weak self] _ in
-                if let item = self?.viewModel.banguCruiseItems {
-                    self?.viewModel.getItem(item: item)
-                }
+                guard let item = self?.viewModel.banguCruiseItems else { return }
+                self?.viewModel.removeDuplicateItem(item: item)
                 DispatchQueue.main.async {
                     self?.mainView.pickerView.reloadAllComponents()
                     
@@ -84,14 +83,14 @@ extension MainViewController: UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         switch component {
         case 0:
-            viewModel.selectedLocation = viewModel.locationItem[row]
+            viewModel.setSelectedLocation(location: viewModel.locationItem[row])
             mainView.pickerView.reloadAllComponents()
         case 1:
-            viewModel.selectedProduct = viewModel.productItem[row]
+            viewModel.setSelectedProduct(product: viewModel.productItem[row])
         default:
             print("Error")
         }
-        print(viewModel.selectedProduct, viewModel.selectedLocation)
+        
         viewModel.dataCheck(product: viewModel.selectedProduct, location: viewModel.selectedLocation)
     }
     

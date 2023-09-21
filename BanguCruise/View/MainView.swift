@@ -60,12 +60,7 @@ final class MainView: UIView {
         return button
     }()
     
-    let pickerView: UIPickerView = {
-        let pickerView = UIPickerView()
-        
-        return pickerView
-    }()
-
+    let pickerView = UIPickerView()
     
     let tableView: UITableView = {
         let tableView = UITableView()
@@ -95,7 +90,6 @@ extension MainView {
             endDateLabel,
             searchButton,
             pickerView
-//            tableView
         ].forEach { addSubview($0) }
     }
     
@@ -132,12 +126,5 @@ extension MainView {
             $0.leading.equalTo(self.safeAreaLayoutGuide).offset(8)
             $0.trailing.bottom.equalTo(self.safeAreaLayoutGuide).offset(-8)
         }
-        
-        
-//        tableView.snp.makeConstraints {
-//            $0.top.equalTo(searchButton.snp.bottom).offset(8)
-//            $0.leading.equalTo(self.safeAreaLayoutGuide)
-//            $0.bottom.trailing.equalTo(self.safeAreaLayoutGuide)
-//        }
     }
 }
