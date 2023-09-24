@@ -46,19 +46,22 @@ final class MainView: UIView {
     
     let searchButton: UIButton = {
         let button = UIButton()
-        button.setTitle("검색하기", for: .normal)
+        button.setTitle("조회하기", for: .normal)
         button.setTitleColor(.systemBlue, for: .normal)
         
         return button
     }()
     
+    let pickerView = UIPickerView()
+    
     let tableView: UITableView = {
         let tableView = UITableView()
         tableView.backgroundColor = .systemBackground
         
-        
         return tableView
     }()
+    
+    private let headerView = HeaderView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -79,7 +82,9 @@ extension MainView {
             startDateLabel,
             endDateLabel,
             searchButton,
-            tableView
+            pickerView,
+            tableView,
+            headerView
         ].forEach { addSubview($0) }
     }
     
@@ -87,6 +92,7 @@ extension MainView {
         inputDateLabel.snp.makeConstraints {
             $0.top.leading.equalTo(self.safeAreaLayoutGuide).offset(14)
             $0.trailing.equalTo(self.safeAreaLayoutGuide).offset(-14)
+            $0.height.equalTo(30)
         }
 
         startDateLabel.snp.makeConstraints {
@@ -110,10 +116,20 @@ extension MainView {
             $0.height.equalTo(40)
         }
         
+        pickerView.snp.makeConstraints {
+            $0.top.equalTo(searchButton.snp.bottom)
+            $0.leading.equalTo(self.safeAreaLayoutGuide).offset(8)
+            $0.trailing.equalTo(self.safeAreaLayoutGuide).offset(-8)           
+        }
+        
+        headerView.snp.makeConstraints {
+            $0.top.equalTo(pickerView.snp.bottom)
+            $0.leading.trailing.equalTo(self.safeAreaLayoutGuide)
+            $0.height.equalTo(60)
+        }
         tableView.snp.makeConstraints {
-            $0.top.equalTo(searchButton.snp.bottom).offset(8)
-            $0.leading.equalTo(self.safeAreaLayoutGuide)
-            $0.bottom.trailing.equalTo(self.safeAreaLayoutGuide)
+            $0.top.equalTo(headerView.snp.bottom)
+            $0.leading.trailing.bottom.equalTo(self.safeAreaLayoutGuide)
         }
     }
 }
