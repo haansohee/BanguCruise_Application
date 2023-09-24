@@ -32,6 +32,11 @@ extension MainViewController {
         view.backgroundColor = .systemBackground
         mainView.pickerView.delegate = self
         mainView.pickerView.dataSource = self
+        mainView.tableView.delegate = self
+        mainView.tableView.dataSource = self
+        
+        mainView.tableView.register(DetailCell.self, forCellReuseIdentifier: "DetailCell")
+        mainView.tableView.separatorStyle = .singleLine
     }
     
     private func addSubviews() {
@@ -45,6 +50,7 @@ extension MainViewController {
     private func bindAll() {
         bindSearchButton()
         bindIsParsed()
+        bindIsDataCheked()
     }
     
     private func configureDateLabel() {
@@ -72,26 +78,37 @@ extension MainViewController {
                 self?.viewModel.removeDuplicateItem(item: item)
                 DispatchQueue.main.async {
                     self?.mainView.pickerView.reloadAllComponents()
-                    
+                    guard let firstRow = self?.viewModel.productItem[0] else { return }
+                    self?.viewModel.setSelectedProduct(product: firstRow)
+
+                    guard let selectedFirstRow = self?.viewModel.selectedProduct else { return }
+                    self?.viewModel.dataCheck(product: selectedFirstRow)
                 }
         })
+            .disposed(by: disposeBag)
+    }
+    
+    private func bindIsDataCheked() {
+        viewModel.isDataCheked
+            .bind(onNext: { [weak self] isDataCheked in
+                guard isDataCheked else { return }
+                self?.mainView.tableView.reloadData()
+            })
             .disposed(by: disposeBag)
     }
 }
 
 extension MainViewController: UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        switch component {
-        case 0:
-            viewModel.setSelectedLocation(location: viewModel.locationItem[row])
-            mainView.pickerView.reloadAllComponents()
-        case 1:
-            viewModel.setSelectedProduct(product: viewModel.productItem[row])
-        default:
-            print("Error")
+        guard viewModel.productItem.count > 0 else {
+            pickerView.isUserInteractionEnabled = false
+            return
         }
         
-        viewModel.dataCheck(product: viewModel.selectedProduct, location: viewModel.selectedLocation)
+        pickerView.isUserInteractionEnabled = true
+        
+        viewModel.setSelectedProduct(product: viewModel.productItem[row])
+        viewModel.dataCheck(product: viewModel.selectedProduct)
     }
     
     func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
@@ -101,32 +118,45 @@ extension MainViewController: UIPickerViewDelegate {
 
 extension MainViewController: UIPickerViewDataSource {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 2
+        return 1
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        switch component {
-        case 0:
-            return viewModel.locationItem.count
-            
-        case 1:
-            return viewModel.productItem.count
-            
-        default:
-            return 0
-        }
+        return viewModel.productItem.count
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        switch component {
-        case 0:
-            return viewModel.locationItem[row]
-            
-        case 1:
-            return viewModel.productItem[row]
-            
-        default:
-            return nil
-        }
+        return viewModel.productItem[row]
     }
+
+}
+
+extension MainViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return viewModel.selectedSampleLocation.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = mainView.tableView.dequeueReusableCell(withIdentifier: "DetailCell", for: indexPath) as? DetailCell else { return UITableViewCell() }
+        let analysis = viewModel.selectedAnalysisLocation[indexPath.row]
+        let sample = viewModel.selectedSampleLocation[indexPath.row]
+        let result = viewModel.selectedResult[indexPath.row]
+        
+        print(analysis, sample, result)
+        
+        cell.setAnalysisLocationLabel(analysis: analysis)
+        cell.setSampleLocationLabel(sample: sample)
+        
+        if result == "검출" {
+            cell.setResultLabel(result: result, color: .red)
+        } else {
+            cell.setResultLabel(result: result, color: .systemGreen)
+        }
+        
+        return cell
+    }
+}
+
+extension MainViewController: UITableViewDelegate {
+    
 }
