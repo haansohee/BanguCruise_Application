@@ -29,6 +29,7 @@ final class MainViewController: UIViewController {
 extension MainViewController {
     private func setupMainView() {
         title = "방구크루즈"
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "establish Retrosans", size: 20) as Any]
         view.backgroundColor = .systemBackground
         mainView.pickerView.delegate = self
         mainView.pickerView.dataSource = self
