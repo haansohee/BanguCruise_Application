@@ -13,10 +13,10 @@ final class MainView: UIView {
     
     let inputDateLabel: UILabel = {
         let label = UILabel()
-        label.text = "최근 2주 간의 검사 결과입니다. 😀"
-        label.font = UIFont(name: "NanumSquareRoundB", size: 20)
-        label.textColor = .label
-        label.textColor = .label
+        label.text = "최근 2주 간의 검사 결과입니다. 🔎"
+        label.font = UIFont(name: "GmarketSansTTFMedium", size: 20)
+        label.backgroundColor = UIColor(hexCode: "b0daea")
+        label.textColor = .white
         label.textAlignment = .center
         
         return label
@@ -27,7 +27,7 @@ final class MainView: UIView {
         label.textColor = .label
         label.textAlignment = .center
         label.font = UIFont(name: "NanumSquareRoundB", size: 18)
-        label.layer.borderColor = UIColor.black.cgColor
+        label.backgroundColor = .systemBackground
         label.numberOfLines = 2
         
         return label
@@ -38,7 +38,7 @@ final class MainView: UIView {
         label.textColor = .label
         label.textAlignment = .center
         label.font = UIFont(name: "NanumSquareRoundB", size: 18)
-        label.layer.borderColor = UIColor.black.cgColor
+        label.backgroundColor = .systemBackground
         label.numberOfLines = 2
         
         return label
@@ -46,8 +46,13 @@ final class MainView: UIView {
     
     let searchButton: UIButton = {
         let button = UIButton()
-        button.setTitle("조회하기", for: .normal)
-        button.setTitleColor(.systemBlue, for: .normal)
+        button.setTitle("조회하기 ", for: .normal)
+        button.titleLabel?.font = UIFont(name: "GmarketSansTTFMedium", size: 20)
+        button.setTitleColor(.gray, for: .normal)
+        button.backgroundColor = .systemBackground
+        button.layer.cornerRadius = 10.0
+        button.layer.borderWidth = 2.0
+        button.layer.borderColor = UIColor(hexCode: "b0daea").cgColor
         
         return button
     }()
@@ -90,29 +95,29 @@ extension MainView {
     
     private func setupLayout() {
         inputDateLabel.snp.makeConstraints {
-            $0.top.leading.equalTo(self.safeAreaLayoutGuide).offset(14)
-            $0.trailing.equalTo(self.safeAreaLayoutGuide).offset(-14)
+            $0.top.equalTo(self.safeAreaLayoutGuide).offset(18)
+            $0.leading.trailing.equalTo(self.safeAreaLayoutGuide)
             $0.height.equalTo(30)
         }
 
         startDateLabel.snp.makeConstraints {
-            $0.top.equalTo(inputDateLabel.snp.bottom).offset(14)
+            $0.top.equalTo(inputDateLabel.snp.bottom).offset(24)
             $0.leading.equalTo(self.safeAreaLayoutGuide).offset(14)
             $0.trailing.equalTo(endDateLabel.snp.leading).offset(-10)
             $0.height.equalTo(50)
         }
 
         endDateLabel.snp.makeConstraints {
-            $0.top.equalTo(inputDateLabel.snp.bottom).offset(14)
+            $0.top.equalTo(inputDateLabel.snp.bottom).offset(24)
             $0.trailing.equalTo(self.safeAreaLayoutGuide).offset(-14)
             $0.width.equalTo(180)
             $0.height.equalTo(50)
         }
 
         searchButton.snp.makeConstraints {
-            $0.top.equalTo(endDateLabel.snp.bottom).offset(14)
+            $0.top.equalTo(endDateLabel.snp.bottom).offset(24)
             $0.centerX.equalTo(self.safeAreaLayoutGuide)
-            $0.width.equalTo(80)
+            $0.width.equalTo(120)
             $0.height.equalTo(40)
         }
         

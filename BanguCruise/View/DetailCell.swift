@@ -11,7 +11,7 @@ import SnapKit
 final class DetailCell: UITableViewCell {
     private let analysisLocationLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 18)
+        label.font = UIFont(name: "GmarketSansTTFMedium", size: 18)
         label.textColor = .label
         label.textAlignment = .center
         
@@ -20,7 +20,7 @@ final class DetailCell: UITableViewCell {
     
     private let sampleLocationLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 18)
+        label.font = UIFont(name: "GmarketSansTTFMedium", size: 18)
         label.textColor = .label
         label.textAlignment = .center
         
@@ -29,7 +29,7 @@ final class DetailCell: UITableViewCell {
     
     private let resultLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 18, weight: .bold)
+        label.font = UIFont(name: "GmarketSansTTFMedium", size: 20)
         label.textAlignment = .center
         
         return label
