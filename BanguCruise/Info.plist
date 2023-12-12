@@ -6,6 +6,7 @@
 	<array>
 		<string>establish Retrosans.ttf</string>
 		<string>NanumSquareRoundB.ttf</string>
+		<string>GmarketSansTTFMedium.ttf</string>
 	</array>
 	<key>API_URL</key>
 	<string>${API_URL}</string>

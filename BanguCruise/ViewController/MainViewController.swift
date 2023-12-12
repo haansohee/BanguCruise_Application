@@ -115,6 +115,21 @@ extension MainViewController: UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
         return 30
     }
+    
+    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+        var pickerLabel: UILabel? = (view as? UILabel)
+        
+        if pickerLabel == nil {
+            pickerLabel = UILabel()
+            pickerLabel?.font = UIFont(name: "NanumSquareRoundB", size: 20)
+            pickerLabel?.textAlignment = .center
+        }
+        
+        pickerLabel?.text = viewModel.productItem[row]
+        pickerLabel?.textColor = .label
+        
+        return pickerLabel!
+    }
 }
 
 extension MainViewController: UIPickerViewDataSource {
@@ -142,8 +157,6 @@ extension MainViewController: UITableViewDataSource {
         let analysis = viewModel.selectedAnalysisLocation[indexPath.row]
         let sample = viewModel.selectedSampleLocation[indexPath.row]
         let result = viewModel.selectedResult[indexPath.row]
-        
-        print(analysis, sample, result)
         
         cell.setAnalysisLocationLabel(analysis: analysis)
         cell.setSampleLocationLabel(sample: sample)
